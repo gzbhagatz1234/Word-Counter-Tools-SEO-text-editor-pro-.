@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Free professional word counter and SEO text editor with live document stats, keyword density, secure HTML stripping, and instant formatting tools." />
+  <meta name="keywords" content="word counter, SEO text editor, keyword density, character count, text formatter, strip HTML" />
+  <meta name="author" content="Word Counter Tools" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Word Counter Tools | SEO Text Editor Pro" />
+  <meta property="og:description" content="Analyze text, track keyword density, and format content instantly in a secure responsive editor." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Word Counter Tools | SEO Text Editor Pro" />
+  <meta name="twitter:description" content="Secure responsive text editor with live stats, local autosave, dark mode, and SEO analysis." />
+  <title>Word Counter Tools | SEO Text Editor Pro</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #081120;
+      --bg-2: #101a31;
+      --surface: rgba(10, 16, 32, 0.82);
+      --surface-strong: rgba(15, 23, 42, 0.92);
+      --surface-soft: rgba(148, 163, 184, 0.08);
+      --text: #ecf3ff;
+      --muted: #a3b8d6;
+      --muted-strong: #c8d8f0;
+      --border: rgba(148, 163, 184, 0.18);
+      --border-strong: rgba(129, 140, 248, 0.26);
+      --brand: #7c9cff;
+      --brand-2: #45d2ff;
+      --brand-3: #9b7cff;
+      --success: #34d399;
+      --warning: #f59e0b;
+      --danger: #fb7185;
+      --shadow: 0 16px 40px rgba(2, 6, 23, 0.34);
+      --shadow-strong: 0 28px 80px rgba(2, 6, 23, 0.45);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --keyword-track: rgba(148, 163, 184, 0.16);
+      --keyword-fill: linear-gradient(90deg, #7c9cff 0%, #45d2ff 55%, #9b7cff 100%);
+      --focus: 0 0 0 3px rgba(69, 210, 255, 0.24);
+      --glass: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+      --page-gradient:
+        radial-gradient(circle at 12% 18%, rgba(69, 210, 255, 0.23), transparent 28%),
+        radial-gradient(circle at 86% 14%, rgba(155, 124, 255, 0.24), transparent 24%),
+        radial-gradient(circle at 50% 78%, rgba(124, 156, 255, 0.14), transparent 30%),
+        linear-gradient(145deg, #050a16 0%, #0a1325 40%, #10182d 100%);
+      --hero-gradient: linear-gradient(135deg, rgba(124, 156, 255, 0.20), rgba(69, 210, 255, 0.10) 45%, rgba(155, 124, 255, 0.14));
+      --meta-bg: rgba(12, 19, 35, 0.76);
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    html[data-theme="light"] {
+      color-scheme: light;
+      --bg: #eff4ff;
+      --bg-2: #dfe9ff;
+      --surface: rgba(255, 255, 255, 0.85);
+      --surface-strong: rgba(255, 255, 255, 0.95);
+      --surface-soft: rgba(79, 70, 229, 0.06);
+      --text: #10203b;
+      --muted: #587090;
+      --muted-strong: #334766;
+      --border: rgba(51, 71, 102, 0.12);
+      --border-strong: rgba(79, 70, 229, 0.18);
+      --brand: #4f46e5;
+      --brand-2: #0ea5e9;
+      --brand-3: #8b5cf6;
+      --success: #059669;
+      --warning: #d97706;
+      --danger: #e11d48;
+      --shadow: 0 16px 38px rgba(79, 70, 229, 0.10);
+      --shadow-strong: 0 28px 70px rgba(30, 41, 59, 0.16);
+      --keyword-track: rgba(79, 70, 229, 0.10);
+      --keyword-fill: linear-gradient(90deg, #4f46e5 0%, #0ea5e9 55%, #8b5cf6 100%);
+      --focus: 0 0 0 3px rgba(79, 70, 229, 0.18);
+      --glass: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.56));
+      --page-gradient:
+        radial-gradient(circle at 10% 12%, rgba(99, 102, 241, 0.18), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(14, 165, 233, 0.18), transparent 24%),
+        radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.12), transparent 28%),
+        linear-gradient(150deg, #f8fbff 0%, #edf3ff 45%, #e4ecff 100%);
+      --hero-gradient: linear-gradient(135deg, rgba(79, 70, 229, 0.12), rgba(14, 165, 233, 0.08) 45%, rgba(139, 92, 246, 0.10));
+      --meta-bg: rgba(255, 255, 255, 0.78);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+
+    body {
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--page-gradient);
+      background-attachment: fixed;
+      position: relative;
+      overflow-x: hidden;
+      transition: background .35s ease, color .25s ease;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 32rem;
+      height: 32rem;
+      border-radius: 999px;
+      filter: blur(48px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+      animation: floatBlob 14s ease-in-out infinite;
+    }
+
+    body::before {
+      top: -10rem;
+      left: -8rem;
+      background: radial-gradient(circle, rgba(69, 210, 255, 0.34) 0%, rgba(69, 210, 255, 0) 70%);
+    }
+
+    body::after {
+      right: -10rem;
+      bottom: -12rem;
+      background: radial-gradient(circle, rgba(155, 124, 255, 0.30) 0%, rgba(155, 124, 255, 0) 70%);
+      animation-delay: -6s;
+    }
+
+    .page-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.34;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(circle at center, rgba(0,0,0,0.72), transparent 88%);
+    }
+
+    .container {
+      width: min(1320px, calc(100% - 32px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(18px);
+      background: rgba(8, 17, 32, 0.38);
+      border-bottom: 1px solid var(--border);
+    }
+
+    html[data-theme="light"] .topbar {
+      background: rgba(239, 244, 255, 0.58);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 0;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      width: 50px;
+      height: 50px;
+      flex: 0 0 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(124, 156, 255, 0.92), rgba(69, 210, 255, 0.92));
+      color: #fff;
+      font-size: 24px;
+      box-shadow: 0 18px 32px rgba(69, 210, 255, 0.22);
+    }
+
+    .eyebrow,
+    .micro-copy,
+    .stat-label,
+    .meta-label,
+    .hint-title,
+    .chip {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+    }
+
+    .eyebrow {
+      margin: 0 0 4px;
+      font-size: 11px;
+      color: var(--brand-2);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    .title {
+      font-size: clamp(1.12rem, 2vw, 1.5rem);
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .title span {
+      color: var(--brand-2);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .save-chip,
+    .theme-btn,
+    .toolbar-btn,
+    .icon-btn,
+    .modal-btn,
+    .shortcut-badge {
+      border: 1px solid var(--border);
+      transition: transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease, opacity .16s ease, color .16s ease;
+      font-family: inherit;
+    }
+
+    .save-chip,
+    .theme-btn,
+    .toolbar-btn,
+    .icon-btn,
+    .shortcut-badge {
+      backdrop-filter: blur(16px);
+      background: var(--glass);
+      box-shadow: var(--shadow);
+    }
+
+    .save-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      color: var(--success);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .theme-btn,
+    .icon-btn,
+    .toolbar-btn,
+    .modal-btn {
+      cursor: pointer;
+    }
+
+    .theme-btn:hover,
+    .icon-btn:hover,
+    .toolbar-btn:hover,
+    .modal-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--border-strong);
+    }
+
+    .theme-btn:focus-visible,
+    .icon-btn:focus-visible,
+    .toolbar-btn:focus-visible,
+    .modal-btn:focus-visible,
+    .theme-toggle-label:focus-visible,
+    textarea:focus-visible {
+      outline: none;
+      box-shadow: var(--focus);
+    }
+
+    .theme-btn {
+      min-width: 124px;
+      height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 999px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 800;
+      padding: 0 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(320px, 410px);
+      gap: 24px;
+      padding: 28px 0 36px;
+      align-items: start;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      min-width: 0;
+    }
+
+    .card {
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.42), transparent);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .hero-card {
+      padding: 20px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
+        var(--hero-gradient),
+        var(--surface);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.9fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      padding: 8px 4px 8px 2px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      font-weight: 950;
+      margin-bottom: 10px;
+      max-width: 12ch;
+    }
+
+    .hero-title span {
+      background: linear-gradient(90deg, var(--brand), var(--brand-2), var(--brand-3));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text {
+      color: var(--muted-strong);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 64ch;
+    }
+
+    .hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--muted-strong);
+    }
+
+    .hero-panel {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .helper-card {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+    }
+
+    .helper-title {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .helper-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .shortcut-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .shortcut-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 64px;
+      border-radius: 12px;
+      padding: 9px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted-strong);
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel-title {
+      font-size: 1.08rem;
+      font-weight: 850;
+      margin-bottom: 4px;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 62ch;
+    }
+
+    .toolbar,
+    .stats-card,
+    .keywords-card,
+    .security-card,
+    .editor-meta-card {
+      padding: 22px;
+    }
+
+    .toolbar-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .toolbar-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 800;
+      padding: 12px 14px;
+      text-align: center;
+    }
+
+    .editor-card {
+      padding: 0;
+    }
+
+    .editor-head {
+      padding: 22px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+    }
+
+    .editor-surface {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .editor-surface::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.015), transparent 30%),
+        linear-gradient(90deg, rgba(124,156,255,0.05), rgba(69,210,255,0.03) 45%, rgba(155,124,255,0.04));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 500px;
+      resize: vertical;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      padding: 24px 24px 104px;
+      font-size: 17px;
+      line-height: 1.76;
+      font-family: inherit;
+      position: relative;
+      z-index: 1;
+    }
+
+    textarea::placeholder {
+      color: rgba(163, 184, 214, 0.78);
+    }
+
+    html[data-theme="light"] textarea::placeholder {
+      color: rgba(88, 112, 144, 0.72);
+    }
+
+    .floating-actions {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      display: flex;
+      gap: 8px;
+      padding: 10px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-strong);
+      background: var(--meta-bg);
+      backdrop-filter: blur(16px);
+      z-index: 2;
+    }
+
+    .icon-btn {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: var(--text);
+      font-size: 18px;
+      background: transparent;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255,255,255,0.06);
+    }
+
+    .icon-btn.danger { color: var(--danger); }
+
+    .editor-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 2px;
+    }
+
+    .meta-box {
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+    }
+
+    .meta-label {
+      display: block;
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .meta-value {
+      font-size: 1.1rem;
+      font-weight: 850;
+      letter-spacing: -0.03em;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat-box,
+    .time-grid,
+    .keyword-empty,
+    .security-note {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+    }
+
+    .stat-box {
+      padding: 16px;
+      border-radius: 18px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 18px;
+    }
+
+    .time-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+    }
+
+    .time-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+    }
+
+    .time-box small {
+      display: block;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 10px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .time-box strong {
+      font-size: 18px;
+      font-weight: 850;
+    }
+
+    .keywords-list {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .keyword-empty {
+      min-height: 180px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border-radius: 18px;
+      color: var(--muted);
+      padding: 18px;
+    }
+
+    .keyword-empty .emoji {
+      font-size: 28px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .keyword-row-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .keyword-row-head .left {
+      min-width: 0;
+      font-weight: 700;
+    }
+
+    .keyword-row-head .left span {
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .keyword-row-head .left strong {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: inline-block;
+      max-width: 100%;
+      vertical-align: bottom;
+    }
+
+    .keyword-track {
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: var(--keyword-track);
+    }
+
+    .keyword-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--keyword-fill);
+      transition: width .35s ease;
+    }
+
+    .security-list {
+      margin: 16px 0 0;
+      padding: 0 0 0 18px;
+      color: var(--muted);
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .security-note {
+      margin-top: 16px;
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: var(--muted-strong);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .footer {
+      padding: 0 0 30px;
+      color: var(--muted);
+      font-size: 13px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .footer-meta {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      white-space: nowrap;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      top: 84px;
+      transform: translate(-50%, -14px);
+      z-index: 70;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: #fff;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-size: 14px;
+      font-weight: 800;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 0 18px 32px rgba(69, 210, 255, 0.28);
+      transition: opacity .22s ease, transform .22s ease;
+      max-width: min(90vw, 480px);
+      text-align: center;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(2, 6, 23, 0.72);
+      backdrop-filter: blur(10px);
+      padding: 18px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: min(460px, 100%);
+      padding: 24px;
+      border-radius: 26px;
+      border: 1px solid var(--border);
+      background: var(--surface-strong);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .modal-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(251, 113, 133, 0.14);
+      color: var(--danger);
+      font-size: 22px;
+      flex: 0 0 48px;
+    }
+
+    .modal-copy {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .modal-btn {
+      padding: 12px 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 800;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .modal-btn.secondary {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .modal-btn.primary {
+      background: linear-gradient(135deg, rgba(251, 113, 133, 1), rgba(225, 29, 72, 1));
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @keyframes floatBlob {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(12px, 16px, 0) scale(1.06); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media (max-width: 1120px) {
+      .layout { grid-template-columns: 1fr; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .save-chip { display: none; }
+    }
+
+    @media (max-width: 760px) {
+      .container { width: min(100% - 20px, 1320px); }
+      .topbar-inner { padding: 14px 0; }
+      .brand-icon { display: none; }
+      .title { font-size: 1.04rem; }
+      .theme-btn { min-width: 54px; padding: 0 12px; }
+      .theme-btn .theme-label { display: none; }
+      .toolbar, .stats-card, .keywords-card, .security-card, .editor-meta-card, .editor-head, .hero-card { padding-left: 16px; padding-right: 16px; }
+      .toolbar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      textarea { padding: 18px 16px 98px; min-height: 380px; font-size: 16px; }
+      .floating-actions { right: 12px; bottom: 12px; }
+      .stats-grid, .time-grid, .editor-meta-grid { grid-template-columns: 1fr 1fr; }
+      .footer-card { flex-direction: column; align-items: flex-start; }
+      .header-actions { gap: 8px; }
+    }
+
+    @media (max-width: 520px) {
+      .toolbar-grid,
+      .stats-grid,
+      .time-grid,
+      .editor-meta-grid {
+        grid-template-columns: 1fr;
+      }
+      .toolbar-btn { width: 100%; }
+      .modal-actions { flex-direction: column-reverse; }
+      .modal-btn { width: 100%; }
+      .hero-title { max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-grid" aria-hidden="true"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <div id="clearModal" class="modal-backdrop" role="presentation" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="clear-title" aria-describedby="clear-description">
+      <div class="modal-head">
+        <div class="modal-icon" aria-hidden="true">⚠️</div>
+        <div>
+          <h2 id="clear-title" class="panel-title">Clear all text?</h2>
+          <p id="clear-description" class="modal-copy">This removes your current draft from the editor and local browser storage.</p>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn secondary" id="cancelClearBtn" type="button">Cancel</button>
+        <button class="modal-btn primary" id="confirmClearBtn" type="button">Yes, clear draft</button>
+      </div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand-wrap">
+        <div class="brand-icon" aria-hidden="true">✍️</div>
+        <div>
+          <p class="eyebrow">Premium SEO workspace</p>
+          <h1 class="title">Word Counter Tools <span>SEO Text Editor Pro</span></h1>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div id="saveStatus" class="save-chip" aria-live="polite">✅ Auto-saved locally</div>
+        <button id="themeToggle" class="theme-btn" type="button" aria-label="Switch to light mode" aria-pressed="true">
+          <span class="theme-icon" aria-hidden="true">🌙</span>
+          <span class="theme-label">Midnight theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container layout">
+    <section class="column" aria-label="Editor workspace">
+      <section class="card hero-card" aria-labelledby="hero-title">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">Focused writing · live SEO insight</p>
+            <h2 class="hero-title" id="hero-title">A cleaner editor with a <span>premium aurora theme</span></h2>
+            <p class="hero-text">Write, paste, clean, and optimize content in a distraction-light workspace with stronger contrast, animated background color effects, and smoother analytics for everyday use.</p>
+            <div class="hero-chips">
+              <div class="chip">⚡ Zero-install standalone file</div>
+              <div class="chip">🛡️ Safer plain-text HTML stripping</div>
+              <div class="chip">📈 Live keyword density + readability</div>
+            </div>
+          </div>
+          <div class="hero-panel">
+            <div class="helper-card">
+              <div class="helper-title">Quick shortcuts</div>
+              <p class="helper-copy">Use fast keyboard actions while editing. The interface also supports local autosave and works fully offline.</p>
+              <div class="shortcut-list">
+                <div class="shortcut-badge">Ctrl/Cmd + S</div>
+                <div class="shortcut-badge">Ctrl/Cmd + Shift + K</div>
+                <div class="shortcut-badge">Esc</div>
+              </div>
+            </div>
+            <div class="helper-card">
+              <div class="helper-title">What changed</div>
+              <p class="helper-copy">This version removes external scripts, improves accessibility, keeps the layout responsive, and adds a more polished glassmorphism background with animated color layers.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card toolbar" aria-labelledby="toolbar-title">
+        <div class="panel-head">
+          <div>
+            <h2 id="toolbar-title" class="panel-title">Formatting tools</h2>
+            <p class="panel-copy">One-click cleanup controls for writers, editors, marketers, and SEO workflows.</p>
+          </div>
+        </div>
+        <div class="toolbar-grid" role="toolbar" aria-label="Text formatting utilities">
+          <button class="toolbar-btn" data-format="upper" type="button" aria-label="Convert to uppercase">🔠 UPPER</button>
+          <button class="toolbar-btn" data-format="lower" type="button" aria-label="Convert to lowercase">🔡 lower</button>
+          <button class="toolbar-btn" data-format="title" type="button" aria-label="Convert to title case">📝 Title Case</button>
+          <button class="toolbar-btn" data-format="sentence" type="button" aria-label="Convert to sentence case">✏️ Sentence case</button>
+          <button class="toolbar-btn" data-format="spaces" type="button" aria-label="Fix extra spaces">✂️ Fix Spaces</button>
+          <button class="toolbar-btn" data-format="stripHtml" type="button" aria-label="Strip HTML safely">🛡️ Strip HTML</button>
+        </div>
+      </section>
+
+      <section class="card editor-card" aria-labelledby="editor-title">
+        <div class="editor-head">
+          <h2 id="editor-title" class="panel-title">Text editor workspace</h2>
+          <p class="panel-copy">Paste or type your content to analyze keywords, readability time, structure, and line depth instantly.</p>
+        </div>
+        <div class="editor-surface">
+          <label for="editor" class="sr-only">Text editor input</label>
+          <textarea id="editor" placeholder="Paste or type your article here to analyze…" spellcheck="true" autocapitalize="sentences" autocomplete="off"></textarea>
+          <div class="floating-actions">
+            <button class="icon-btn" id="copyBtn" type="button" aria-label="Copy text to clipboard" title="Copy">📋</button>
+            <button class="icon-btn" id="downloadBtn" type="button" aria-label="Download as text file" title="Download">⬇️</button>
+            <button class="icon-btn danger" id="openClearBtn" type="button" aria-label="Clear editor" title="Clear">🗑️</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card editor-meta-card" aria-labelledby="meta-title">
+        <div class="panel-head">
+          <div>
+            <h2 id="meta-title" class="panel-title">Live writing indicators</h2>
+            <p class="panel-copy">Helpful micro-stats update in real time so users can keep structure and pacing under control.</p>
+          </div>
+        </div>
+        <div class="editor-meta-grid">
+          <div class="meta-box">
+            <span class="meta-label">Characters without spaces</span>
+            <div id="statCharsNoSpaces" class="meta-value">0</div>
+          </div>
+          <div class="meta-box">
+            <span class="meta-label">Lines</span>
+            <div id="statLines" class="meta-value">0</div>
+          </div>
+          <div class="meta-box">
+            <span class="meta-label">Longest sentence</span>
+            <div id="statLongestSentence" class="meta-value">0 w</div>
+          </div>
+          <div class="meta-box">
+            <span class="meta-label">Top keyword count</span>
+            <div id="statTopKeywordCount" class="meta-value">0</div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <aside class="column" aria-label="SEO analytics sidebar">
+      <section class="card stats-card" aria-labelledby="stats-title">
+        <div class="panel-head">
+          <div>
+            <h2 id="stats-title" class="panel-title">Document stats</h2>
+            <p class="panel-copy">Monitor length, structure, and estimated reading time while you edit.</p>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-label">Words</div>
+            <div class="stat-value" id="statWords">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Characters</div>
+            <div class="stat-value" id="statChars">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Sentences</div>
+            <div class="stat-value" id="statSentences">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Paragraphs</div>
+            <div class="stat-value" id="statParagraphs">0</div>
+          </div>
+        </div>
+        <div class="time-grid">
+          <div class="time-box">
+            <div class="time-icon" aria-hidden="true">⏱️</div>
+            <div>
+              <small>Read time</small>
+              <strong id="statRead">0 min</strong>
+            </div>
+          </div>
+          <div class="time-box">
+            <div class="time-icon" aria-hidden="true">🎙️</div>
+            <div>
+              <small>Speak time</small>
+              <strong id="statSpeak">0 min</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card keywords-card" aria-labelledby="keywords-title">
+        <div class="panel-head">
+          <div>
+            <h2 id="keywords-title" class="panel-title">SEO keyword density</h2>
+            <p class="panel-copy">Top recurring keywords help spot overuse and highlight focus terms quickly.</p>
+          </div>
+        </div>
+        <div id="keywordContainer">
+          <div class="keyword-empty">
+            <div>
+              <span class="emoji" aria-hidden="true">🔎</span>
+              <p>Type something to analyze keywords.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card security-card" aria-labelledby="security-title">
+        <div class="panel-head">
+          <div>
+            <h2 id="security-title" class="panel-title">Quality & security highlights</h2>
+            <p class="panel-copy">Built with safer defaults, better offline behavior, and a smoother editing workflow.</p>
+          </div>
+        </div>
+        <ul class="security-list">
+          <li>HTML stripping converts markup to plain text instead of rendering it.</li>
+          <li>No <code>eval()</code>, no raw HTML injection, and no hard-coded secrets.</li>
+          <li>Drafts are saved locally in the browser only.</li>
+          <li>The standalone file now works offline without external tracking scripts.</li>
+        </ul>
+        <div class="security-note">Tip: Use <strong>Ctrl/Cmd + S</strong> to download the current draft instantly, or <strong>Ctrl/Cmd + Shift + K</strong> to strip HTML from pasted content.</div>
+      </section>
+    </aside>
+  </main>
+
+  <footer class="container footer">
+    <div class="footer-card">
+      <p>Word Counter Tools helps writers clean text, review SEO keywords, and export copy-ready drafts in a more polished, easier-to-use interface.</p>
+      <div class="footer-meta">Responsive • Accessible • Offline-ready</div>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const STORAGE_KEYS = {
+        draft: 'seo_editor_pro_draft',
+        theme: 'seo_editor_theme_v2'
+      };
+
+      const STOP_WORDS = new Set([
+        'a','about','above','after','again','against','all','am','an','and','any','are','as','at','be','because','been','before','being','below','between','both','but','by','can','did','do','does','doing','down','during','each','few','for','from','further','had','has','have','having','he','her','here','hers','herself','him','himself','his','how','i','if','in','into','is','it','its','itself','me','more','most','my','myself','no','nor','not','of','off','on','once','only','or','other','our','ours','ourselves','out','over','own','same','she','should','so','some','such','than','that','the','their','theirs','them','themselves','then','there','these','they','this','those','through','to','too','under','until','up','very','was','we','were','what','when','where','which','while','who','whom','why','with','you','your','yours','yourself','yourselves'
+      ]);
+
+      const editor = document.getElementById('editor');
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = themeToggle.querySelector('.theme-icon');
+      const themeLabel = themeToggle.querySelector('.theme-label');
+      const saveStatus = document.getElementById('saveStatus');
+      const toast = document.getElementById('toast');
+      const clearModal = document.getElementById('clearModal');
+      const cancelClearBtn = document.getElementById('cancelClearBtn');
+      const confirmClearBtn = document.getElementById('confirmClearBtn');
+      const openClearBtn = document.getElementById('openClearBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const keywordContainer = document.getElementById('keywordContainer');
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
+      const modalButtons = [cancelClearBtn, confirmClearBtn];
+
+      const stats = {
+        words: document.getElementById('statWords'),
+        chars: document.getElementById('statChars'),
+        sentences: document.getElementById('statSentences'),
+        paragraphs: document.getElementById('statParagraphs'),
+        read: document.getElementById('statRead'),
+        speak: document.getElementById('statSpeak'),
+        charsNoSpaces: document.getElementById('statCharsNoSpaces'),
+        lines: document.getElementById('statLines'),
+        longestSentence: document.getElementById('statLongestSentence'),
+        topKeywordCount: document.getElementById('statTopKeywordCount')
+      };
+
+      const state = {
+        debounceTimer: null,
+        toastTimer: null,
+        lastFocusedBeforeModal: null,
+        lastKeywords: []
+      };
+
+      function safeReadStorage(key, fallbackValue) {
+        try {
+          const value = window.localStorage.getItem(key);
+          return value === null ? fallbackValue : value;
+        } catch {
+          return fallbackValue;
+        }
+      }
+
+      function safeWriteStorage(key, value) {
+        try {
+          window.localStorage.setItem(key, value);
+        } catch {
+          // Ignore storage errors.
+        }
+      }
+
+      function safeRemoveStorage(key) {
+        try {
+          window.localStorage.removeItem(key);
+        } catch {
+          // Ignore storage errors.
+        }
+      }
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('visible');
+        window.clearTimeout(state.toastTimer);
+        state.toastTimer = window.setTimeout(() => {
+          toast.classList.remove('visible');
+        }, 2400);
+      }
+
+      function setSaveState(mode) {
+        if (mode === 'saving') {
+          saveStatus.textContent = '🟠 Saving draft…';
+          saveStatus.style.color = 'var(--warning)';
+          return;
+        }
+        saveStatus.textContent = '✅ Auto-saved locally';
+        saveStatus.style.color = 'var(--success)';
+      }
+
+      function applyTheme(theme) {
+        const normalizedTheme = theme === 'light' ? 'light' : 'dark';
+        const isDark = normalizedTheme === 'dark';
+        document.documentElement.setAttribute('data-theme', normalizedTheme);
+        themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+        themeToggle.setAttribute('aria-pressed', String(isDark));
+        if (themeIcon) themeIcon.textContent = isDark ? '🌙' : '☀️';
+        if (themeLabel) themeLabel.textContent = isDark ? 'Midnight theme' : 'Aurora light';
+        if (themeMeta) themeMeta.setAttribute('content', isDark ? '#0b1020' : '#eef4ff');
+        safeWriteStorage(STORAGE_KEYS.theme, normalizedTheme);
+      }
+
+      function getPreferredTheme() {
+        const savedTheme = safeReadStorage(STORAGE_KEYS.theme, '');
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+          return savedTheme;
+        }
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          return 'light';
+        }
+        return 'dark';
+      }
+
+      function stripHtmlToText(value) {
+        const parser = new DOMParser();
+        const parsed = parser.parseFromString(String(value), 'text/html');
+        return (parsed.body && parsed.body.textContent ? parsed.body.textContent : '').replace(/\u00A0/g, ' ');
+      }
+
+      function toTitleCase(value) {
+        return value.toLowerCase().replace(/(^|\s|\n)(\p{L})/gu, match => match.toUpperCase());
+      }
+
+      function toSentenceCase(value) {
+        return value.toLowerCase().replace(/(^\s*\p{L}|[.!?]\s+\p{L}|\n+\s*\p{L})/gu, match => match.toUpperCase());
+      }
+
+      function normalizeSpacing(value) {
+        return value
+          .replace(/\r\n/g, '\n')
+          .replace(/[ \t]+/g, ' ')
+          .replace(/ *\n */g, '\n')
+          .replace(/\n{3,}/g, '\n\n')
+          .trim();
+      }
+
+      function formatText(formatType) {
+        const current = editor.value;
+        let next = current;
+
+        switch (formatType) {
+          case 'upper':
+            next = current.toUpperCase();
+            break;
+          case 'lower':
+            next = current.toLowerCase();
+            break;
+          case 'title':
+            next = toTitleCase(current);
+            break;
+          case 'sentence':
+            next = toSentenceCase(current);
+            break;
+          case 'spaces':
+            next = normalizeSpacing(current);
+            break;
+          case 'stripHtml':
+            next = stripHtmlToText(current);
+            break;
+          default:
+            break;
+        }
+
+        if (next === current) {
+          showToast('No text changes were needed.');
+          return;
+        }
+
+        editor.value = next;
+        persistDraftSoon();
+        analyzeText();
+
+        const messages = {
+          upper: 'Converted to uppercase.',
+          lower: 'Converted to lowercase.',
+          title: 'Converted to title case.',
+          sentence: 'Converted to sentence case.',
+          spaces: 'Extra spacing cleaned up.',
+          stripHtml: 'HTML removed safely.'
+        };
+
+        showToast(messages[formatType] || 'Formatting applied.');
+      }
+
+      function persistDraftSoon() {
+        setSaveState('saving');
+        window.clearTimeout(state.debounceTimer);
+        state.debounceTimer = window.setTimeout(() => {
+          const value = editor.value;
+          if (value.trim()) {
+            safeWriteStorage(STORAGE_KEYS.draft, value);
+          } else {
+            safeRemoveStorage(STORAGE_KEYS.draft);
+          }
+          setSaveState('saved');
+        }, 360);
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function renderKeywords(keywords) {
+        state.lastKeywords = keywords;
+
+        if (!keywords.length) {
+          stats.topKeywordCount.textContent = '0';
+          keywordContainer.innerHTML = '<div class="keyword-empty"><div><span class="emoji" aria-hidden="true">🧠</span><p>Not enough meaningful words yet to calculate keyword density.</p></div></div>';
+          return;
+        }
+
+        stats.topKeywordCount.textContent = String(keywords[0].count);
+        keywordContainer.innerHTML = '<div class="keywords-list">' + keywords.map(item => {
+          const width = Math.min(item.percentage, 100);
+          return `
+            <div>
+              <div class="keyword-row-head">
+                <div class="left"><strong>${escapeHtml(item.keyword)}</strong> <span>(${item.count})</span></div>
+                <div>${item.percentage}%</div>
+              </div>
+              <div class="keyword-track"><div class="keyword-fill" style="width:${width}%"></div></div>
+            </div>
+          `;
+        }).join('') + '</div>';
+      }
+
+      function analyzeText() {
+        const raw = editor.value.replace(/\r\n/g, '\n');
+        const trimmed = raw.trim();
+        const lines = raw ? raw.split('\n').length : 0;
+
+        if (!trimmed) {
+          stats.words.textContent = '0';
+          stats.chars.textContent = '0';
+          stats.sentences.textContent = '0';
+          stats.paragraphs.textContent = '0';
+          stats.read.textContent = '0 min';
+          stats.speak.textContent = '0 min';
+          stats.charsNoSpaces.textContent = '0';
+          stats.lines.textContent = '0';
+          stats.longestSentence.textContent = '0 w';
+          stats.topKeywordCount.textContent = '0';
+          keywordContainer.innerHTML = '<div class="keyword-empty"><div><span class="emoji" aria-hidden="true">🔎</span><p>Type something to analyze keywords.</p></div></div>';
+          return;
+        }
+
+        const wordsArray = trimmed.split(/\s+/).filter(Boolean);
+        const wordCount = wordsArray.length;
+        const characterCount = raw.length;
+        const charsNoSpaces = raw.replace(/\s/g, '').length;
+        const sentenceParts = trimmed.split(/[.!?]+(?=\s|$)/).map(item => item.trim()).filter(Boolean);
+        const sentenceCount = sentenceParts.length;
+        const paragraphCount = trimmed.split(/\n{2,}|\n+/).filter(item => item.trim().length > 0).length;
+        const readMinutes = Math.max(1, Math.ceil(wordCount / 225));
+        const speakMinutes = Math.max(1, Math.ceil(wordCount / 130));
+        const longestSentence = sentenceParts.reduce((max, sentence) => {
+          const count = sentence.split(/\s+/).filter(Boolean).length;
+          return Math.max(max, count);
+        }, 0);
+
+        stats.words.textContent = String(wordCount);
+        stats.chars.textContent = String(characterCount);
+        stats.sentences.textContent = String(sentenceCount);
+        stats.paragraphs.textContent = String(paragraphCount);
+        stats.read.textContent = readMinutes + ' min';
+        stats.speak.textContent = speakMinutes + ' min';
+        stats.charsNoSpaces.textContent = String(charsNoSpaces);
+        stats.lines.textContent = String(lines || 1);
+        stats.longestSentence.textContent = String(longestSentence) + ' w';
+
+        const counts = new Map();
+        for (const word of wordsArray) {
+          const normalized = word.toLowerCase().replace(/[^\p{L}\p{N}'-]/gu, '').replace(/^['-]+|['-]+$/gu, '');
+          if (normalized.length <= 2 || STOP_WORDS.has(normalized)) continue;
+          counts.set(normalized, (counts.get(normalized) || 0) + 1);
+        }
+
+        const keywords = Array.from(counts.entries())
+          .map(([keyword, count]) => ({
+            keyword,
+            count,
+            percentage: Number(((count / wordCount) * 100).toFixed(1))
+          }))
+          .sort((a, b) => b.count - a.count || a.keyword.localeCompare(b.keyword))
+          .slice(0, 8);
+
+        renderKeywords(keywords);
+      }
+
+      async function copyText() {
+        const value = editor.value;
+        if (!value.trim()) {
+          showToast('Nothing to copy yet.');
+          return;
+        }
+
+        const selectionStart = editor.selectionStart;
+        const selectionEnd = editor.selectionEnd;
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            editor.focus();
+            editor.select();
+            const ok = document.execCommand && document.execCommand('copy');
+            if (!ok) throw new Error('copy-failed');
+          }
+          showToast('Copied to clipboard.');
+        } catch {
+          showToast('Copy failed. You can press Ctrl/Cmd + C.');
+        } finally {
+          editor.focus();
+          if (typeof selectionStart === 'number' && typeof selectionEnd === 'number') {
+            editor.setSelectionRange(selectionStart, selectionEnd);
+          }
+        }
+      }
+
+      function downloadText() {
+        const value = editor.value;
+        if (!value.trim()) {
+          showToast('Add some text before downloading.');
+          return;
+        }
+
+        const blob = new Blob([value], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = 'seo-text-editor-pro.txt';
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showToast('Text file downloaded.');
+      }
+
+      function openModal() {
+        if (!editor.value.trim()) {
+          showToast('There is nothing to clear.');
+          return;
+        }
+        state.lastFocusedBeforeModal = document.activeElement;
+        clearModal.classList.add('open');
+        clearModal.setAttribute('aria-hidden', 'false');
+        cancelClearBtn.focus();
+      }
+
+      function closeModal() {
+        clearModal.classList.remove('open');
+        clearModal.setAttribute('aria-hidden', 'true');
+        if (state.lastFocusedBeforeModal && typeof state.lastFocusedBeforeModal.focus === 'function') {
+          state.lastFocusedBeforeModal.focus();
+        }
+      }
+
+      function confirmClear() {
+        editor.value = '';
+        safeRemoveStorage(STORAGE_KEYS.draft);
+        window.clearTimeout(state.debounceTimer);
+        analyzeText();
+        setSaveState('saved');
+        closeModal();
+        showToast('Editor cleared.');
+      }
+
+      function trapModalFocus(event) {
+        if (!clearModal.classList.contains('open') || event.key !== 'Tab') return;
+        const focusable = modalButtons.filter(Boolean);
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!first || !last) return;
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+
+      function handleModalKeydown(event) {
+        if (!clearModal.classList.contains('open')) return;
+        if (event.key === 'Escape') {
+          closeModal();
+          return;
+        }
+        trapModalFocus(event);
+      }
+
+      function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      }
+
+      function handleShortcuts(event) {
+        const modifier = event.ctrlKey || event.metaKey;
+        if (!modifier) return;
+
+        if (event.key.toLowerCase() === 's') {
+          event.preventDefault();
+          downloadText();
+          return;
+        }
+
+        if (event.shiftKey && event.key.toLowerCase() === 'k') {
+          event.preventDefault();
+          formatText('stripHtml');
+        }
+      }
+
+      document.querySelectorAll('[data-format]').forEach(button => {
+        button.addEventListener('click', () => formatText(button.getAttribute('data-format')));
+      });
+
+      editor.addEventListener('input', () => {
+        persistDraftSoon();
+        analyzeText();
+      });
+      themeToggle.addEventListener('click', toggleTheme);
+      copyBtn.addEventListener('click', copyText);
+      downloadBtn.addEventListener('click', downloadText);
+      openClearBtn.addEventListener('click', openModal);
+      cancelClearBtn.addEventListener('click', closeModal);
+      confirmClearBtn.addEventListener('click', confirmClear);
+      clearModal.addEventListener('click', event => {
+        if (event.target === clearModal) closeModal();
+      });
+      window.addEventListener('keydown', handleModalKeydown);
+      window.addEventListener('keydown', handleShortcuts);
+
+      applyTheme(getPreferredTheme());
+      editor.value = safeReadStorage(STORAGE_KEYS.draft, '');
+      analyzeText();
+      setSaveState('saved');
+    })();
+  </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
